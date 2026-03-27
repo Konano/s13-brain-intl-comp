@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="《密阵突围》双人回合制网格对战游戏。选择起点、规划路径、吞并对手，赢下棋盘。">
+    <title>密阵突围</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-content">
+            <div class="game-board-wrapper">
+                <div class="board-with-axes">
+                    <div class="axis-row" id="axisTop"></div>
+                    <div class="axis-main">
+                        <div class="axis-col" id="axisLeft"></div>
+                        <div id="gameBoard" class="game-board"></div>
+                        <div class="axis-col" id="axisRight"></div>
+                    </div>
+                    <div class="axis-row" id="axisBottom"></div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <header class="sidebar-header">
+                    <h1>密阵突围</h1>
+                    <p class="author-credit">作者：孙艺豪、郑林楷<br>以及非常好用的 GitHub Copilot！</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-label">当前回合:</span>
+                            <span class="stat-value" id="currentPlayer">玩家 A</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">回合剩余:</span>
+                            <span class="stat-value" id="turnTimer">20s</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">A 分数:</span>
+                            <span class="stat-value" id="scoreA">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">B 分数:</span>
+                            <span class="stat-value" id="scoreB">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">回合数:</span>
+                            <span class="stat-value" id="stepCount">0</span>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="controls">
+                    <h3>游戏控制</h3>
+                    <button id="newStartBtn" class="btn btn-primary">开始游戏</button>
+                    <button id="resetBtn" class="btn btn-secondary">重置游戏</button>
+                    <button id="skipTurnBtn" class="btn btn-warning">跳过本回合</button>
+
+                    <label class="toggle-item">
+                        <input type="checkbox" id="timerToggle" checked>
+                        <span>回合计时 (20s)</span>
+                    </label>
+
+                    <div class="start-points-panel">
+                        <h4>已选起点</h4>
+                        <div class="start-points-group">
+                            <div class="start-points-title player-a">玩家 A</div>
+                            <div id="startPointsListA" class="start-points-list">
+                                <p class="empty-message">点击"开始游戏"开始</p>
+                            </div>
+                        </div>
+                        <div class="start-points-group">
+                            <div class="start-points-title player-b">玩家 B</div>
+                            <div id="startPointsListB" class="start-points-list">
+                                <p class="empty-message">等待玩家 A 完成</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="undo-redo-controls">
+                        <h4>历史操作</h4>
+                        <div class="undo-redo-buttons">
+                            <button id="undoBtn" class="btn btn-undo" title="撤销 (Ctrl+Z)">
+                                ↶ 撤销
+                            </button>
+                            <button id="redoBtn" class="btn btn-redo" title="重做 (Ctrl+Y)">
+                                ↷ 重做
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="direction-controls">
+                        <h4>移动控制</h4>
+                        <div class="arrow-keys">
+                            <button class="arrow-btn" id="upBtn">↑<br><small>A: ↑ / B: W</small></button>
+                            <div class="arrow-row">
+                                <button class="arrow-btn" id="leftBtn">←<br><small>A: ← / B: A</small></button>
+                                <button class="arrow-btn" id="downBtn">↓<br><small>A: ↓ / B: S</small></button>
+                                <button class="arrow-btn" id="rightBtn">→<br><small>A: → / B: D</small></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-panel">
+                    <h3>游戏规则</h3>
+                    <div class="rules">
+                        <p><strong>移动条件:</strong></p>
+                        <ul>
+                            <li>移动到<strong>非空格子</strong>：数字或字母至少有一个相同</li>
+                            <li>移动到<strong>空格子</strong>：总是可以移动</li>
+                        </ul>
+                        <p><strong>碰撞规则:</strong></p>
+                        <ul>
+                            <li>数字字母都相同 → 不变，原格子消失</li>
+                            <li>只有字母相同 → 数字相加%10，原格子消失</li>
+                            <li>只有数字相同 → 字母五进制相加%5，原格子消失</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="path-display">
+                    <h3>当前路径</h3>
+                    <div id="pathList" class="path-list">
+                        <p class="empty-message">请选择起点开始游戏</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
