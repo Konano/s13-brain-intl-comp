@@ -530,6 +530,30 @@ body {
     padding: 10px;
 }
 
+.github-link {
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    color: rgba(31, 41, 55, 0.6);
+    backdrop-filter: blur(2px);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    z-index: 50;
+}
+
+.github-link:hover {
+    background: rgba(255, 255, 255, 0.35);
+    color: rgba(31, 41, 55, 0.9);
+    transform: translateY(-1px);
+}
+
 /* 滚动条美化 */
 .path-list::-webkit-scrollbar, .moves-list::-webkit-scrollbar, .game-board-wrapper::-webkit-scrollbar {
     width: 8px;
